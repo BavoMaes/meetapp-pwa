@@ -1,0 +1,43 @@
+# OS X
+.DS_Store*
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+*~
+
+# npm
+node_modules
+package-lock.json
+*.log
+*.gz
+
+# Cllient
+
+client/.DS_Store
+client/node_modules
+client/dist
+
+# Client local env files
+client/.env.local
+client/.env.*.local
+
+# Client log files
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
