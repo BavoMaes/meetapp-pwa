@@ -1,18 +1,21 @@
 <template>
   <div id="app">
+    <TopBar v-if="this.$route.name !== 'Login' && this.$route.name !== 'Scan'"/>
     <div class="content">
       <router-view/>
     </div>
-    <NavigationBar/>
+    <NavigationBar v-if="this.$route.name !== 'Login'"/>
   </div>
 </template>
 
 <script>
 import NavigationBar from './components/NavigationBar';
+import TopBar from './components/TopBar';
 
 export default {
   components: {
-    NavigationBar
+    NavigationBar,
+    TopBar
   }
 }
 </script>
@@ -27,7 +30,7 @@ export default {
 }
 
 .content {
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 125px);
   min-width: 100%;
 }
 </style>

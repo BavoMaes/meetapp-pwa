@@ -10,7 +10,7 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 125px);
 }
 
 h1 {

@@ -1,11 +1,11 @@
 <template>
-  <div class="discover">
-    <h1>This is the discover page</h1>
+  <div class="profile">
+    <h1>This is the profile page</h1>
   </div>
 </template>
 
 <style lang="scss">
-.discover {
+.profile {
     display: flex;
     flex-direction: column;
     justify-content: center;
