@@ -1,19 +1,29 @@
 <template>
   <div class="profile">
-    <h1>This is the profile page</h1>
+    <img class="profile__picture" src="../assets/profile.png" />
+    <p class="profile__name">Mock User</p>
   </div>
 </template>
 
 <style lang="scss">
 .profile {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    height: calc(100vh - 125px);
-}
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
 
-h1 {
-    display: block;
+  &__picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
+
+  &__name {
+    font-size: 22px;
+    font-weight: bold;
+  }
 }
 </style>
