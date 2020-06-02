@@ -23,11 +23,13 @@ export default {
 
 <style lang="scss">
 .chat {
-    padding: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column-reverse;
-    min-height: 100%;
+  height: calc(100vh - 125px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 h1 {

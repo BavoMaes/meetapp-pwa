@@ -4,6 +4,9 @@
        <input class="login__input login__email" type="text" placeholder="Email"/>
        <input class="login__input login__password" type="password" placeholder="Password"/>
        <router-link to="/info" tag="button" class="login__button">Login</router-link>
+       <router-link to="/register" class="login__registerlink">
+        <p class="login__registertext">Don't have an account yet?<br/>Click here to register.</p>
+       </router-link>
     </div>
 </template>
 
@@ -45,10 +48,6 @@ export default {
                 color: $navigation-active;
             }
         }
-
-        &::placeholder {
-
-        }
     }
 
     &__button {
@@ -61,6 +60,19 @@ export default {
         border-radius: 3px;
         font-size: 18px;
         padding: 10px 0;
+    }
+
+    &__register {
+        &link {
+            margin-top: 40px;
+            max-width: 50%;
+            text-decoration: none !important;
+        }
+
+        &text {
+            color: $navigation-active;
+            font-size: 13px;
+        }
     }
 }
 </style>

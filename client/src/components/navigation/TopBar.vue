@@ -28,7 +28,7 @@
       </div>
       <div class="topbar__blank" v-else></div>
       <h1 class="topbar__title">{{ $route.name }}</h1>
-      <div class="topbar__profile" v-if="this.$route.name !== 'Info' && this.$route.name !== 'My profile'">
+      <div class="topbar__profile" v-if="this.$route.name !== 'Info' && this.$route.name !== 'My profile' && this.$route.name !== 'Register'">
         <router-link to="/profile">
           <img class="topbar__picture" src="../../assets/profile.png" />
         </router-link>

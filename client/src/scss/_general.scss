@@ -1,0 +1,37 @@
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.textinput {
+    margin-top: 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid $navigation-inactive;
+    font-size: 18px;
+    width: 60%;
+    padding: 10px 0;
+    outline: none;
+
+    &:focus {
+      border-bottom: 0.5px solid $navigation-active;
+
+      &::placeholder {
+        color: $navigation-active;
+      }
+    }
+}
+
+.button {
+  outline: none;
+  border: 1px solid $navigation-active;
+  background-color: $navigation-active;
+  width: 60%;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 18px;
+  margin-top: 40px;
+  padding: 10px 0;
+}

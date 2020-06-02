@@ -4,7 +4,7 @@
     <div class="content">
       <router-view/>
     </div>
-    <NavigationBar v-if="this.$route.name !== 'Login'"/>
+    <NavigationBar v-if="this.$route.name !== 'Register' && this.$route.name !== 'Login'"/>
   </div>
 </template>
 
@@ -30,7 +30,8 @@ export default {
 }
 
 .content {
-  height: calc(100vh - 125px);
+  min-height: calc(100vh - 125px);
+  max-height: 100vh;
   min-width: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
