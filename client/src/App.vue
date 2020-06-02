@@ -30,7 +30,9 @@ export default {
 }
 
 .content {
-  min-height: calc(100vh - 125px);
+  height: calc(100vh - 125px);
   min-width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 </style>
