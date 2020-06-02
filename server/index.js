@@ -2,6 +2,7 @@ const express = require('express');
 const socket = require('socket.io');
 
 const database = require('./config/database');
+const socketListener = require('./socketio/listener');
 
 const port = process.env.PORT || 5000;
 
@@ -17,8 +18,8 @@ const server = app.listen(port, () => console.log(`Server started on port ${port
 /* Start Socket.io */
 
 const io = socket(server);
-io.on('connection', () => {
-  console.log('A user connected...');
+io.on('connection', (socket) => {
+  socketListener.listen(socket);
 })
 
 

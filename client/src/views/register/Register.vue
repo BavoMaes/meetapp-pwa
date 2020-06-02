@@ -3,19 +3,38 @@
     <div class="register__picture">
       <img class="register__icon" src="../../assets/no_profile_picture.svg"/>
     </div>
-    <input class="textinput" type="text" placeholder="Email"/>
-    <input class="textinput" type="text" placeholder="Password"/>
-    <input class="textinput" type="text" placeholder="First name"/>
-    <input class="textinput" type="text" placeholder="Last name"/>
-    <input class="textinput" type="text" placeholder="Job title"/>
-    <input class="textinput" type="text" placeholder="Employer"/>
-    <router-link class="button" to="/scan" tag="button">Register</router-link>
+    <input v-model="user.email" class="textinput" type="text" name="email" placeholder="Email"/>
+    <input v-model="user.password" class="textinput" type="password" name="password" placeholder="Password"/>
+    <input v-model="user.firstname" class="textinput" type="text" name="firstname" placeholder="First name"/>
+    <input v-model="user.lastname" class="textinput" type="text" name="lastname" placeholder="Last name"/>
+    <input v-model="user.jobTitle" class="textinput" type="text" name="jobtitle" placeholder="Job title"/>
+    <input v-model="user.employer" class="textinput" type="text" name="employer" placeholder="Employer"/>
+    <button class="button" @click="register">Register</button>
   </div>
 </template>
 
 <script>
 export default {
-  
+  data: () => ({
+    user: {
+      email: null,
+      password: null,
+      firstname: null,
+      lastname: null,
+      jobTitle: null,
+      employer: null
+    }
+  }),
+  methods: {
+    register() {
+      this.$socket.emit('register', this.user, this.checkIfCreated);
+    },
+    checkIfCreated(user) {
+      if (user !== null) {
+        this.$router.push({path: '/scan'});
+      }
+    }
+  }
 }
 </script>
 
