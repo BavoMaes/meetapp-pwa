@@ -1,9 +1,10 @@
 <template>
     <div class="login">
        <h1 class="login__title">Career Launch</h1>
-       <input class="login__input login__email" type="text" placeholder="Email"/>
-       <input class="login__input login__password" type="password" placeholder="Password"/>
-       <router-link to="/info" tag="button" class="login__button">Login</router-link>
+       <input v-model="email" class="login__input login__email" type="text" placeholder="Email"/>
+       <input v-model="password" class="login__input login__password" type="password" placeholder="Password"/>
+       <p class="login__error">{{ error }}</p>
+       <button class="login__button" @click="login">Login</button>
        <router-link to="/register" class="login__registerlink">
         <p class="login__registertext">Don't have an account yet?<br/>Click here to register.</p>
        </router-link>
@@ -12,7 +13,25 @@
 
 <script>
 export default {
-    
+    data: () => ({
+        email: null,
+        password: null,
+        error: null
+    }),
+    methods: {
+        login() {
+            console.log(this.email, this.password);
+            this.$socket.emit('login', {email: this.email, password: this.password}, this.checkIfLoggedIn)
+        },
+        checkIfLoggedIn(token) {
+            if (token.hasOwnProperty('error')) {
+                this.error = token.error
+            } else {
+                this.error = null;
+                this.$router.push({path: '/info'});
+            }
+        }
+    }
 }
 </script>
 
@@ -50,11 +69,18 @@ export default {
         }
     }
 
+    &__error {
+        font-size: 13px;
+        color: $color-error;
+        margin-top: 30px;
+
+    }
+
     &__button {
         outline: none;
         border: 1px solid $navigation-active;
         background-color: $navigation-active;
-        margin-top: 60px;
+        margin-top: 30px;
         width: 60%;
         color: #fff;
         border-radius: 3px;

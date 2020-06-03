@@ -35,6 +35,7 @@ export default {
       if (user.hasOwnProperty('error')) {
         this.error = user.error;
       } else {
+        this.error = null;
         this.$router.push({path: '/info'});
       }
     }
