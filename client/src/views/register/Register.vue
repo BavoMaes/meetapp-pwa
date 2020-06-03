@@ -9,6 +9,7 @@
     <input v-model="user.lastname" class="textinput" type="text" name="lastname" placeholder="Last name"/>
     <input v-model="user.jobTitle" class="textinput" type="text" name="jobtitle" placeholder="Job title"/>
     <input v-model="user.employer" class="textinput" type="text" name="employer" placeholder="Employer"/>
+    <p class="register__error">{{ error }}</p>
     <button class="button" @click="register">Register</button>
   </div>
 </template>
@@ -23,15 +24,18 @@ export default {
       lastname: null,
       jobTitle: null,
       employer: null
-    }
+    },
+    error: null
   }),
   methods: {
     register() {
       this.$socket.emit('register', this.user, this.checkIfCreated);
     },
     checkIfCreated(user) {
-      if (user !== null) {
-        this.$router.push({path: '/scan'});
+      if (user.hasOwnProperty('error')) {
+        this.error = user.error;
+      } else {
+        this.$router.push({path: '/info'});
       }
     }
   }
@@ -60,6 +64,13 @@ export default {
   &__icon {
     width: 40px;
     height: 40px;
+  }
+
+  &__error {
+    font-size: 13px;
+    margin-top: 20px;
+    width: 60%;
+    color: $color-error;
   }
 }
 </style>

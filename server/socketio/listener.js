@@ -1,9 +1,9 @@
-const registerController = require('../controllers/register');
+const userController = require('../controllers/user');
 
 this.listen = (socket) => {
   console.log('A user connected.');
   socket.on('register', async (user, callback) => {
-    let registeredUser = await registerController.register(user);
+    let registeredUser = await userController.register(user);
     callback(registeredUser);
   } );
   socket.on('disconnect', () => {
