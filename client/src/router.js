@@ -1,15 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Info from './views/Info';
-import Scan from './views/Scan';
-import Discover from './views/Discover';
-import Chat from './views/Chat';
 import Login from './views/Login';
 import Register from './views/register/Register';
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -31,22 +27,43 @@ export default new Router({
     {
       path: '/info',
       name: 'Info',
-      component: Info
+      component: () => import('./views/Info.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/scan',
       name: 'Scan',
-      component: Scan
+      component: () => import('./views/Scan.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/discover',
       name: 'Discover',
-      component: Discover
+      component: () => import('./views/Discover.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/chat',
       name: 'Chat',
-      component: Chat
+      component: () => import('./views/chat/Chat.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/conversation',
+      name: 'Conversation',
+      component: () => import('./views/chat/Conversation.vue'),
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
-})
+});
+ export default router;

@@ -1,6 +1,6 @@
 <template>
-  <div class="chat">
-    <div class="chat__messages">
+  <div class="conversation">
+    <div class="conversation__messages">
       <ChatBubble message="Hey!" v-bind:currentUser='true'/>
       <ChatBubble message="How's it been?" v-bind:currentUser='true'/>
       <ChatBubble message="Good, and you?" v-bind:currentUser='false'/>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import ChatBubble from '../components/chat/ChatBubble';
+import ChatBubble from '@/components/chat/ChatBubble';
 
 export default {
   components: {
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="scss">
-.chat {
+.conversation {
   height: calc(100vh - 125px);
   overflow-x: hidden;
   overflow-y: scroll;
@@ -30,9 +30,5 @@ export default {
   box-sizing: border-box;
   display: flex;
   flex-direction: column-reverse;
-}
-
-h1 {
-    display: block;
 }
 </style>
