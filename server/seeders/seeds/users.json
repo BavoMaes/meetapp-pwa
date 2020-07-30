@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "email": "daron@seed.com",
+      "password": "daron",
+      "firstname": "Daron",
+      "lastname": "Piggott",
+      "jobTitle": "Software Developer",
+      "employer": "Google"
+    },
+    {
+      "email": "keenan@seed.com",
+      "password": "keenan",
+      "firstname": "Keenan",
+      "lastname": "Keywood",
+      "jobTitle": "Project Manager",
+      "employer": "Microsoft"
+    },
+    {
+      "email": "esther@seed.com",
+      "password": "esther",
+      "firstname": "Esther",
+      "lastname": "Reinhart",
+      "jobTitle": "UX Designer",
+      "employer": "Apple"
+    },
+    {
+      "email": "dianne@seed.com",
+      "password": "dianne",
+      "firstname": "Dianne",
+      "lastname": "Tibald",
+      "jobTitle": "Advertiser",
+      "employer": "Nestlé"
+    },
+    {
+      "email": "colleen@seed.com",
+      "password": "colleen",
+      "firstname": "Colleen",
+      "lastname": "Ledrane",
+      "jobTitle": "Back End Developer",
+      "employer": "Shopify"
+    }
+  ]
+}
