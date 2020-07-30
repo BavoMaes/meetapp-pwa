@@ -5,12 +5,12 @@ const authController = require('../controllers/auth');
 
 this.registerUser = async (user) => {
   try {
-    if (this.checkIfUserExists(user)) {
+    if (await this.checkIfUserExists(user)) {
       return {error: 'User already exists.'}
     }
     user.password = await this.hashPassword(user.password);
     let createdUser = await this.createUser(user);
-    return this.validateCreatedUser(createdUser);
+    return await this.validateCreatedUser(createdUser);
   } catch (error) {
     console.log(error);
     return {
@@ -42,7 +42,7 @@ this.loginUser = async (user) => {
 
 this.checkIfUserExists = async (user) => {
   try {
-      return await userModel.findOne({
+      return await userModel.model.findOne({
         email: user.email
       });
   } catch (error) {
@@ -65,7 +65,7 @@ this.hashPassword = async (password) => {
 this.createUser = async (user) => {
   try {
     let createdUser = await userModel.create(user);
-    console.log(`User created: ${user.firstname} ${user.lastname}`);
+    console.log(`User created: ${createdUser.firstname} ${createdUser.lastname}`);
     return createdUser;
   } catch (error) {
     console.error(error);
@@ -76,10 +76,10 @@ this.createUser = async (user) => {
 }
 
 this.validateCreatedUser = async (user) => {
-    if (!user) {
-      return { error: 'User could not be created'};
-    }
-    return user;
+  if (!user) {
+    return { error: 'User could not be created'};
+  }
+  return user;
 }
 
 this.compareHashes = async (password, hashedPassword) => {

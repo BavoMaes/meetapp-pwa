@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const queries = require('./queries');
 
 const userSchema = mongoose.Schema({
     email: {
@@ -33,4 +34,15 @@ const userSchema = mongoose.Schema({
 
 const userModel = mongoose.model('User', userSchema);
 
-module.exports = userModel
+const createUser = (document) => { return queries.create(userModel, document) };
+const findUserById = (document) => { return queries.findById(userModel, document) };
+const updateUser = (document) => { return queries.update(userModel, document) };
+const deleteUser = (document) => { return queries.delete(userModel, document) };
+
+module.exports = {
+    model: userModel,
+    create: createUser,
+    findById: findUserById,
+    update: updateUser,
+    delete: deleteUser
+}
