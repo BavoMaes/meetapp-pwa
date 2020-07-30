@@ -3,14 +3,14 @@ const bcrypt = require('bcrypt');
 const userModel = require('../models/user');
 const authController = require('../controllers/auth');
 
-this.registerUser = async (user) => {
+const registerUser = async (user) => {
   try {
-    if (await this.checkIfUserExists(user)) {
+    if (await checkIfUserExists(user)) {
       return {error: 'User already exists.'}
     }
-    user.password = await this.hashPassword(user.password);
-    let createdUser = await this.createUser(user);
-    return await this.validateCreatedUser(createdUser);
+    user.password = await hashPassword(user.password);
+    let createdUser = await createUser(user);
+    return await validateCreatedUser(createdUser);
   } catch (error) {
     console.log(error);
     return {
@@ -19,13 +19,13 @@ this.registerUser = async (user) => {
   }
 }
 
-this.loginUser = async (user) => {
+const loginUser = async (user) => {
   try {
-    let existingUser = await this.checkIfUserExists(user);
+    let existingUser = await checkIfUserExists(user);
     if (!existingUser) {
       return {error: 'Invalid user credentials.'}
     }
-    if (! await this.compareHashes(user.password, existingUser.password)) {
+    if (! await compareHashes(user.password, existingUser.password)) {
       return {error: 'Invalid user credentials.'}
     }
     return {
@@ -40,7 +40,7 @@ this.loginUser = async (user) => {
   }
 }
 
-this.checkIfUserExists = async (user) => {
+const checkIfUserExists = async (user) => {
   try {
       return await userModel.model.findOne({
         email: user.email
@@ -51,7 +51,7 @@ this.checkIfUserExists = async (user) => {
   }
 }
 
-this.hashPassword = async (password) => {
+const hashPassword = async (password) => {
   try {
     return await bcrypt.hash(password, 10);
   } catch (error) {
@@ -62,7 +62,7 @@ this.hashPassword = async (password) => {
   }
 }
 
-this.createUser = async (user) => {
+const createUser = async (user) => {
   try {
     let createdUser = await userModel.create(user);
     console.log(`User created: ${createdUser.firstname} ${createdUser.lastname}`);
@@ -75,14 +75,14 @@ this.createUser = async (user) => {
   }
 }
 
-this.validateCreatedUser = async (user) => {
+const validateCreatedUser = async (user) => {
   if (!user) {
     return { error: 'User could not be created'};
   }
   return user;
 }
 
-this.compareHashes = async (password, hashedPassword) => {
+const compareHashes = async (password, hashedPassword) => {
   try {
     return await bcrypt.compare(password, hashedPassword);
   } catch (error) {
@@ -92,6 +92,6 @@ this.compareHashes = async (password, hashedPassword) => {
 }
 
 module.exports = {
-  register: this.registerUser,
-  login: this.loginUser
+  register: registerUser,
+  login: loginUser
 }
