@@ -12,6 +12,8 @@
 </template>
 
 <script>
+
+
 export default {
     data: () => ({
         email: null,
@@ -20,7 +22,6 @@ export default {
     }),
     methods: {
         login() {
-            console.log(this.email, this.password);
             this.$socket.emit('login', {email: this.email, password: this.password}, this.checkIfLoggedIn)
         },
         checkIfLoggedIn(token) {
@@ -28,6 +29,7 @@ export default {
                 this.error = token.error
             } else {
                 this.error = null;
+                this.$store.commit('setAuthenticated', true);
                 this.$router.push({path: '/info'});
             }
         }
