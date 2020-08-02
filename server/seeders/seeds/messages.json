@@ -1,0 +1,28 @@
+{
+  "messages": [
+    {
+      "content": "Hey!"
+    },
+    {
+      "content": "How's it been?"
+    },
+    {
+      "content": "Everything's good!"
+    },
+    {
+      "content": "How are you?"
+    },
+    {
+      "content": "It's been a while..."
+    },
+    {
+      "content": "What are you doing in your life right now?"
+    },
+    {
+      "content": "I have started a new startup called MeetApp."
+    },
+    {
+      "content": "It's a PWA to network with other people on events."
+    }
+  ]
+}

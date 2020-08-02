@@ -2,12 +2,7 @@
 <div>
   <div class="conversation">
     <div class="conversation__messages">
-      <ChatBubble message="Hey!" v-bind:currentUser='true'/>
-      <ChatBubble message="How's it been?" v-bind:currentUser='true'/>
-      <ChatBubble message="Good, and you?" v-bind:currentUser='false'/>
-      <ChatBubble message="How are you?" v-bind:currentUser='false'/>
-      <ChatBubble message="It has been a while. What are you doing in your life right now?" v-bind:currentUser='false'/>
-      <ChatBubble message="I have started a new startup called MeetApp. It's an PWA to network on live events." v-bind:currentUser='true'/>
+      <ChatBubble v-for="message in messages" :key="message._id" :message="message.content" :currentUser='true'/>
     </div>
   </div>
   <ChatInput/>
@@ -22,6 +17,25 @@ export default {
   components: {
     ChatBubble,
     ChatInput
+  },
+  created() {
+    this.getAllMessages();
+  },
+  data: () => ({
+    error: null,
+    messages: []
+  }),
+  methods: {
+    getAllMessages() {
+      this.$socket.emit('getMessages', this.checkMessages);
+    },
+    checkMessages(response) {
+      if (response.hasOwnProperty('error')) {
+        this.error = response.error;
+      } else {
+        this.messages = response;
+      }
+    }
   }
 }
 </script>
