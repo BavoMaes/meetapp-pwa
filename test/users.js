@@ -1,25 +1,24 @@
-const assert = require('chai').assert;
 const rewire = require('rewire');
+const assert = require('chai').assert;
 
-const userController = rewire('../server/controllers/user');
+const userService = rewire('../server/services/user');
 
 describe('User validation', () => {
-  const validateCreatedUser = userController.__get__('validateCreatedUser');
+  const validateUser = userService.__get__('validateUser');
 
-  it('Empty user should return error', async () => {
-    let validatedUser = await validateCreatedUser(null);
-    assert.isTrue(validatedUser.hasOwnProperty('error'));
-  });
-
-  it('Empty user should return correct error message', async () => {
-    let validatedUser = await validateCreatedUser(null);
-    assert.equal(validatedUser.error, 'User could not be created');
+  it('Empty user throws error', async () => {
+    try {
+      let validatedUser = await validateUser(null);
+      assert.fail();
+    } catch (error) {
+      assert.instanceOf(error, Error);
+    }
   });
 });
 
 describe('Password hashing', () => {
-  const hashPassword = userController.__get__('hashPassword');
-  const compareHashes = userController.__get__('compareHashes');
+  const hashPassword = userService.__get__('hashPassword');
+  const compareHashes = userService.__get__('compareHashes');
 
   it('Hashed password is 60 characters long', async () => {
     let hashedPassword = await hashPassword('60characters');
@@ -34,12 +33,12 @@ describe('Password hashing', () => {
   it('Hashed password correctly compares to real password', async () => {
     let hashedPassword = await hashPassword('mySecretPassword1');
     let compared = await compareHashes('mySecretPassword1', hashedPassword);
-    assert.isTrue(compared);
+    assert.equal(compared, true);
   });
 
   it('Hashed password does not compare to other password', async () => {
     let hashedPassword = await hashPassword('mySecretPassword1');
     let compared = await compareHashes('mySecretPassword2', hashedPassword);
-    assert.isFalse(compared);
+    assert.equal(compared, false);
   })
 });
