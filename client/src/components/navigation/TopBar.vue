@@ -70,7 +70,7 @@ export default {
 .topbar {
   width: 100%;
   height: 54px;
-  border-bottom: 0.5px solid $navigation-inactive;
+  border-bottom: 1px solid $navigation-inactive;
   display: flex;
   justify-content: space-between;
   align-items: center;

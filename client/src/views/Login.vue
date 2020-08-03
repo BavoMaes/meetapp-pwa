@@ -56,14 +56,14 @@ export default {
         border-top: none;
         border-left: none;
         border-right: none;
-        border-bottom: 0.5px solid $navigation-inactive;
+        border-bottom: 1px solid $navigation-inactive;
         font-size: 18px;
         width: 60%;
         padding: 10px 0;
         outline: none;
 
         &:focus {
-            border-bottom: 0.5px solid $navigation-active;
+            border-bottom: 1px solid $navigation-active;
 
             &::placeholder {
                 color: $navigation-active;

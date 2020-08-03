@@ -30,7 +30,7 @@ export default {
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  border-bottom: 0.5px solid $navigation-inactive;
+  border-bottom: 1px solid $navigation-inactive;
 
   &__pic {
     width: 50px;

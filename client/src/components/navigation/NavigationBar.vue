@@ -59,7 +59,7 @@ export default {
     background-color: #fff;
     position: fixed;
     bottom: 0;
-    border-top: 0.5px solid $navigation-inactive;
+    border-top: 1px solid $navigation-inactive;
 
     &__list {
         list-style-type: none;
