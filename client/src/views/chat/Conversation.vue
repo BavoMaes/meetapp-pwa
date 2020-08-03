@@ -12,6 +12,7 @@
 <script>
 import ChatBubble from '@/components/chat/ChatBubble';
 import ChatInput from '@/components/chat/ChatInput';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -21,19 +22,23 @@ export default {
   created() {
     this.getAllMessages();
   },
+  computed: {
+    ...mapGetters({
+      messages: 'chat/getMessages'
+    })
+  },
   data: () => ({
-    error: null,
-    messages: []
+    error: null
   }),
   methods: {
     getAllMessages() {
-      this.$socket.emit('getMessages', this.checkMessages);
+      this.$socket.emit('getMessages', this.handleMessages);
     },
-    checkMessages(response) {
+    handleMessages(response) {
       if (response.hasOwnProperty('error')) {
         this.error = response.error;
       } else {
-        this.messages = response;
+        this.$store.commit('chat/initMessages', response);
       }
     }
   }
