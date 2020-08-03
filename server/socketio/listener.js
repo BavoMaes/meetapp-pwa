@@ -1,7 +1,7 @@
 const userController = require('../controllers/user');
 const messageController = require('../controllers/message');
 
-this.listen = (socket) => {
+this.listen = (io, socket) => {
   console.log('A user connected.');
   // Register a user
   socket.on('register', async (user, callback) => {
@@ -17,6 +17,11 @@ this.listen = (socket) => {
   socket.on('getMessages', async (callback) => {
     let messages = await messageController.getAll();
     callback(messages);
+  });
+  socket.on('sendMessage', async (message, callback) => {
+    let sentMessage = await messageController.send(message);
+    io.emit('ADD_MESSAGE', sentMessage);
+    callback(sentMessage);
   })
   socket.on('disconnect', () => {
     console.log('A user disconnected.');

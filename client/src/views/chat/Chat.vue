@@ -1,21 +1,58 @@
 <template>
-  <div>
-    <ChatListItem name="Peter McMannon" message="Hi! How are you? I wanted to contact you"></ChatListItem>
-    <ChatListItem name="Javier Portino" message="Hey man, what's up? I'm new to this app."></ChatListItem>
-    <ChatListItem name="Tyler Durden" message="Please add me on LinkedIn for more information"></ChatListItem>
+<div>
+  <div class="conversation">
+    <div class="conversation__messages">
+      <ChatBubble v-for="message in messages" :key="message._id" v-bind:message="message.content" :currentUser='true'/>
+    </div>
   </div>
+  <ChatInput/>
+</div>
 </template>
 
 <script>
-import ChatListItem from '@/components/chat/ChatListItem';
+import ChatBubble from '@/components/chat/ChatBubble';
+import ChatInput from '@/components/chat/ChatInput';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
-    ChatListItem
+    ChatBubble,
+    ChatInput
+  },
+  created() {
+    this.getAllMessages();
+  },
+  computed: {
+    ...mapGetters({
+      messages: 'chat/getMessages'
+    })
+  },
+  data: () => ({
+    error: null
+  }),
+  methods: {
+    getAllMessages() {
+      this.$socket.emit('getMessages', this.handleMessages);
+    },
+    handleMessages(response) {
+      if (response.hasOwnProperty('error')) {
+        this.error = response.error;
+      } else {
+        this.$store.commit('chat/initMessages', response);
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss">
-
+.conversation {
+  height: calc(100vh - 166px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column-reverse;
+}
 </style>

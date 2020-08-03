@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 const chatModule = {
   namespaced: true,
   state: () => ({
@@ -11,10 +13,15 @@ const chatModule = {
   mutations: {
     initMessages(state, messages) {
       state.messages = messages
+    },
+    addMessage(state, message) {
+      state.messages.push(message);
     }
   },
   actions: {
-
+    SOCKET_ADD_MESSAGE({commit}, message) {
+      commit('addMessage', message);
+    }
   }
 }
 

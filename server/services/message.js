@@ -18,7 +18,17 @@ const getAllMessages = async () => {
   }
 }
 
+const createMessage = async (message) => {
+  try {
+    let createdMessage = await messageModel.create(message);
+    return createdMessage;
+  } catch (error) {
+    throw error;
+  }
+} 
+
 module.exports = {
   send: sendMessage,
-  getAll: getAllMessages
+  getAll: getAllMessages,
+  create: createMessage
 }

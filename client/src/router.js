@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login';
 import Register from './views/register/Register';
+// import store from './store';
 
 Vue.use(Router)
 
@@ -50,8 +51,8 @@ let router = new Router({
     },
     {
       path: '/chat',
-      name: 'Chat',
-      component: () => import('./views/chat/Chat.vue'),
+      name: 'ChatList',
+      component: () => import('./views/chat/ChatList.vue'),
       meta: {
         requiresAuth: true
       }
@@ -59,11 +60,27 @@ let router = new Router({
     {
       path: '/conversation',
       name: 'Conversation',
-      component: () => import('./views/chat/Conversation.vue'),
+      component: () => import('./views/chat/Chat.vue'),
       meta: {
         requiresAuth: true
       }
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.authenticated) {
+      next({
+        path: '/login'
+      });
+    } else {
+      next();
+    }
+    next();
+  } else {
+    next();
+  }
+});
+
  export default router;
