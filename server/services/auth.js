@@ -11,7 +11,7 @@ this.sign = async (id) => {
       },
       process.env.JWT_KEY)
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -24,7 +24,7 @@ this.verifyToken = async (token) => {
     let decodedToken = jwt.verity(token, process.env.JWT_KEY);
     return decodedToken.userId
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 }
 

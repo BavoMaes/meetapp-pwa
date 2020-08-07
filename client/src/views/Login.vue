@@ -22,14 +22,16 @@ export default {
     }),
     methods: {
         login() {
-            this.$socket.emit('login', {email: this.email, password: this.password}, this.checkIfLoggedIn)
+            this.$socket.emit('login', {email: this.email, password: this.password}, this.handleLoginResponse)
         },
-        checkIfLoggedIn(token) {
-            if (token.hasOwnProperty('error')) {
-                this.error = token.error
+        handleLoginResponse(response) {
+            if (response.hasOwnProperty('error')) {
+                this.error = response.error
             } else {
                 this.error = null;
-                this.$store.commit('setAuthenticated', true);
+                this.$store.commit('auth/setAuthenticated', true);
+                this.$store.commit('auth/setToken', response.token);
+                this.$store.commit('auth/setUser', response.user);
                 this.$router.push({path: '/info'});
             }
         }

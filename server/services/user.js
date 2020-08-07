@@ -27,7 +27,8 @@ const loginUser = async (user) => {
       throw new Error('Invalid user credentials');
     }
     return {
-      token: await authService.sign(user)
+      token: await authService.sign(user),
+      user: await stripSensitiveData(existingUser)
     }
   } catch (error) {
     throw error;
@@ -76,6 +77,17 @@ const validateUser = async (user) => {
     return user;
   } catch (error) {
     throw error;
+  }
+}
+
+const stripSensitiveData = async (user) => {
+  return {
+    _id: user._id,
+    email: user.email,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    jobTitle: user.jobTitle,
+    employer: user.employer,
   }
 }
 

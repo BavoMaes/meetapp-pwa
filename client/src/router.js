@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login';
 import Register from './views/register/Register';
-// import store from './store';
+import store from './store/index';
 
 Vue.use(Router)
 
@@ -10,6 +10,10 @@ let router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/',
+      redirect: '/info'
+    },
     {
       path: '/login',
       name: 'Login',
@@ -70,7 +74,7 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.state.authenticated) {
+    if (!store.state.auth.authenticated) {
       next({
         path: '/login'
       });
