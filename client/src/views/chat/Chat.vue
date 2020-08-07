@@ -2,7 +2,7 @@
 <div>
   <div class="conversation">
     <div class="conversation__messages">
-      <ChatBubble v-for="message in messages" :key="message._id" v-bind:message="message.content" :currentUser='true'/>
+      <ChatBubble v-for="message in messages" :key="message._id" v-bind:message="message" :currentUser='true'/>
     </div>
   </div>
   <ChatInput/>

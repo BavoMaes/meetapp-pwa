@@ -1,16 +1,22 @@
 <template>
-    <div class="chatbubble__container" v-bind:class="{'chatbubble__container--current': currentUser}">
-        <div class="chatbubble" v-bind:class="{'chatbubble--current': currentUser}">
-            <p class="chatbubble__text" v-bind:class="{'chatbubble__text--current': currentUser}">{{ message }}</p>
+    <div class="chatbubble__container" v-bind:class="{'chatbubble__container--current': message.userId === user._id}">
+        <div class="chatbubble" v-bind:class="{'chatbubble--current': message.userId === user._id}">
+            <p class="chatbubble__text" v-bind:class="{'chatbubble__text--current': message.userId === user._id}">{{ message.content }}</p>
         </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     props: {
-        message: String,
-        currentUser: Boolean
+        message: String
+    },
+    computed: {
+        ...mapGetters({
+            user: 'auth/getUser'
+        })
     }
 }
 </script>
