@@ -12,7 +12,7 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/info'
+      redirect: '/info',
     },
     {
       path: '/login',
@@ -55,16 +55,16 @@ let router = new Router({
     },
     {
       path: '/chat',
-      name: 'ChatList',
-      component: () => import('./views/chat/ChatList.vue'),
+      name: 'Chat',
+      component: () => import('./views/chat/Chat.vue'),
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/conversation',
+      path: '/chat/:conversationId',
       name: 'Conversation',
-      component: () => import('./views/chat/Chat.vue'),
+      component: () => import('./views/chat/Conversation.vue'),
       meta: {
         requiresAuth: true
       }

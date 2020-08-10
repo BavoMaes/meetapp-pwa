@@ -12,8 +12,6 @@
 </template>
 
 <script>
-
-
 export default {
     data: () => ({
         email: null,
@@ -22,18 +20,31 @@ export default {
     }),
     methods: {
         login() {
-            this.$socket.emit('login', {email: this.email, password: this.password}, this.handleLoginResponse)
+            this.$socket.emit('login', {email: this.email, password: this.password}, this.handleLoginResponse);
         },
         handleLoginResponse(response) {
             if (response.hasOwnProperty('error')) {
                 this.error = response.error
             } else {
-                this.error = null;
-                this.$store.commit('auth/setAuthenticated', true);
-                this.$store.commit('auth/setToken', response.token);
-                this.$store.commit('auth/setUser', response.user);
+                this.initUser(response.token, response.user);
+                this.$socket.emit('getMatches', response.user, this.handleMatchesResponse);
+            }
+        },
+        initUser(token, user) {
+            this.$store.commit('auth/setAuthenticated', true);
+            this.$store.commit('auth/setToken', token);
+            this.$store.commit('auth/setUser', user);
+        },
+        handleMatchesResponse(response) {
+            if (response.hasOwnProperty('error')) {
+                this.error = response.error
+            } else {
+                this.initMatches(response);
                 this.$router.push({path: '/info'});
             }
+        },
+        initMatches(matches) {
+            this.$store.commit('matches/initMatches', matches);
         }
     }
 }

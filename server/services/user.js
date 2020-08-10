@@ -28,7 +28,7 @@ const loginUser = async (user) => {
     }
     return {
       token: await authService.sign(user),
-      user: await stripSensitiveData(existingUser)
+      user: stripSensitiveData(existingUser)
     }
   } catch (error) {
     throw error;
@@ -80,7 +80,7 @@ const validateUser = async (user) => {
   }
 }
 
-const stripSensitiveData = async (user) => {
+const stripSensitiveData = (user) => {
   return {
     _id: user._id,
     email: user.email,
@@ -93,5 +93,6 @@ const stripSensitiveData = async (user) => {
 
 module.exports = {
   register: registerUser,
-  login: loginUser
+  login: loginUser,
+  strip: stripSensitiveData
 }

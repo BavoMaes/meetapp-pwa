@@ -1,15 +1,17 @@
 const messageSeed = require('./seeds/messages.json');
 const messageService = require('../services/message');
 
-const runMessageSeeder = async (user) => {
+const runMessageSeeder = async (users) => {
   try {
     return await Promise.all(
-      messageSeed.messages.map(async (content) => {
-        let message = {
-          userId: '5f22be524444925c81db132f',
-          content: content.content
-        }
-        messageService.send(message);
+      users.map(async (user) => {
+        messageSeed.messages.map(async (message) => {
+          let newMessage = {
+            userId: user._id,
+            content: message.content
+          }
+          return await messageService.send(newMessage);
+        })
       })
     )
   } catch (error) {

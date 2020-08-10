@@ -31,7 +31,6 @@ export default {
 
 .content {
   min-height: calc(100vh - 125px);
-  max-height: 100vh;
   min-width: 100%;
   overflow-x: hidden;
 }

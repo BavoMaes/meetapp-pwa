@@ -1,9 +1,9 @@
 <template>
-  <router-link class="listitem" to="/conversation">
+  <router-link class="listitem" :to="{name: 'Conversation', params: {conversationId: conversationId}}">
     <ProfilePicture class="listitem__pic"></ProfilePicture>
     <div class="listitem__data">
-      <p class="listitem__name">{{ name }}</p>
-      <p class="listitem__preview">{{ message }}</p>
+      <p class="listitem__name">{{ firstname }} {{ lastname }}</p>
+      <p class="listitem__preview">Hi there!</p>
     </div>
   </router-link>
 </template>
@@ -15,8 +15,10 @@ export default {
     ProfilePicture
   },
   props: {
-    name: String,
-    message: String
+    firstname: String,
+    lastname: String,
+    message: String,
+    conversationId: String
   }
 }
 </script>

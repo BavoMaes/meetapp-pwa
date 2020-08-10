@@ -1,5 +1,6 @@
 const userController = require('../controllers/user');
 const messageController = require('../controllers/message');
+const matchController = require('../controllers/match');
 
 this.listen = (io, socket) => {
   console.log('A user connected.');
@@ -18,11 +19,17 @@ this.listen = (io, socket) => {
     let messages = await messageController.getAll();
     callback(messages);
   });
+  // Send a chat message
   socket.on('sendMessage', async (message, callback) => {
     let sentMessage = await messageController.send(message);
     io.emit('ADD_MESSAGE', sentMessage);
     callback(sentMessage);
-  })
+  });
+  // Initialize conversations
+  socket.on('getMatches', async (user, callback) => {
+    let matches = await matchController.getAll(user);
+    callback(matches);
+  });
   socket.on('disconnect', () => {
     console.log('A user disconnected.');
   })

@@ -5,9 +5,9 @@ const runUserSeeder = async () => {
   try {
     return await Promise.all(
       userSeed.users.map(async (user) => {
-        return userController.register(user);
+        return await userController.register(user);
       })
-    )
+    );
   } catch (error) {
     throw error;
   }
