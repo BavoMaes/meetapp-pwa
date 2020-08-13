@@ -12,7 +12,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
+    computed: {
+        ...mapGetters({
+            user: 'auth/getUser'
+        })
+    },
     data: () => ({
         email: null,
         password: null,
@@ -39,12 +45,17 @@ export default {
             if (response.hasOwnProperty('error')) {
                 this.error = response.error
             } else {
-                this.initMatches(response);
-                this.$router.push({path: '/info'});
+                this.$store.commit('matches/initMatches', response);
+                this.$socket.emit('getMessages', this.user, this.handleMessagesResponse);
             }
         },
-        initMatches(matches) {
-            this.$store.commit('matches/initMatches', matches);
+        handleMessagesResponse(response) {
+            if (response.hasOwnProperty('error')) {
+                this.error = response.error
+            } else {
+                this.$store.commit('chat/initMessages', response);
+                this.$router.push({path: '/chat'});
+            }
         }
     }
 }

@@ -15,8 +15,8 @@ this.listen = (io, socket) => {
     callback(userToken);
   });
   // Get all chat messages
-  socket.on('getMessages', async (callback) => {
-    let messages = await messageController.getAll();
+  socket.on('getMessages', async (user, callback) => {
+    let messages = await messageController.getFromUser(user);
     callback(messages);
   });
   // Send a chat message

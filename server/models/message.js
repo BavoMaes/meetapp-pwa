@@ -1,17 +1,26 @@
 const mongoose = require('mongoose');
 const queries = require('./queries');
 
-const messageSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  content: {
-    type: String,
-    required: true
+const messageSchema = mongoose.Schema(
+  {
+    matchId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Match',
+      required: true
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
+    }
+  }, {
+    timestamps: true
   }
-});
+);
 
 const messageModel = mongoose.model('Message', messageSchema);
 

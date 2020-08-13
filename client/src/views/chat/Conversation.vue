@@ -2,7 +2,7 @@
 <div>
   <div class="conversation">
     <div class="conversation__messages">
-      <ChatBubble v-for="message in messages" :key="message._id" v-bind:message="message" :currentUser='true'/>
+      <ChatBubble v-for="message in messages" :key="message._id" :message="message" :currentUser='true'/>
     </div>
   </div>
   <ChatInput/>
@@ -12,36 +12,20 @@
 <script>
 import ChatBubble from '@/components/chat/ChatBubble';
 import ChatInput from '@/components/chat/ChatInput';
-import { mapGetters } from 'vuex';
 
 export default {
   components: {
     ChatBubble,
     ChatInput
   },
-  created() {
-    this.getAllMessages();
-  },
   computed: {
-    ...mapGetters({
-      messages: 'chat/getMessages'
-    })
+    messages () {
+      return this.$store.getters['chat/getConversation'](this.$route.params.conversationId);
+    }
   },
   data: () => ({
     error: null
-  }),
-  methods: {
-    getAllMessages() {
-      this.$socket.emit('getMessages', this.handleMessages);
-    },
-    handleMessages(response) {
-      if (response.hasOwnProperty('error')) {
-        this.error = response.error;
-      } else {
-        this.$store.commit('chat/initMessages', response);
-      }
-    }
-  }
+  })
 }
 </script>
 

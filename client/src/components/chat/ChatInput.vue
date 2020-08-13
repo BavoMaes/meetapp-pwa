@@ -10,8 +10,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
+  computed: {
+    ...mapGetters({
+      user: 'auth/getUser'
+    })
+  },
   data: () => ({
     error: null,
     message: ""
@@ -19,15 +25,13 @@ export default {
   methods: {
     sendMessage() {
       if (this.message) {
-        this.$socket.emit('sendMessage', {userId: '5f22be524444925c81db132f', content: this.message}, this.handleSentMessage)
+        this.$socket.emit('sendMessage', {matchId: this.$route.params.conversationId, userId: this.user._id, content: this.message}, this.handleSentMessage)
       }
     },
     handleSentMessage(response) {
       if (response.hasOwnProperty('error')) {
         this.error = response.error;
       } else {
-        console.log(response);
-        // this.$store.commit('chat/addMessage', response)
         this.message = "";
       }
     }

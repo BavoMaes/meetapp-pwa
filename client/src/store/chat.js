@@ -4,13 +4,15 @@ const chatModule = {
     messages: []
   }),
   getters: {
-    getMessages: (state) => {
-      return state.messages
+    getConversation: (state) => (id) => {
+      return Object.values(state.messages).filter(message => message.matchId == id);
     }
   },
   mutations: {
-    initMessages(state, messages) {
-      state.messages = messages
+    initMessages(state, payload) {
+      payload.map(message => {
+        state.messages.push(message);
+      })
     },
     addMessage(state, message) {
       state.messages.push(message);

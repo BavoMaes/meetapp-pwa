@@ -1,14 +1,22 @@
 const messageService = require('../services/message');
 
-const getAllMessages = async () => {
+const getMessagesFromUser = async (user) => {
   try {
-    let messages = await messageService.getAll();
+    let messages = await messageService.getFromUser(user);
     return messages;
   } catch (error) {
     console.error(error.message);
     return {
       error: 'Something went wrong. Please try again later.'
     }
+  }
+}
+
+const getMessagesFromMatch = async (match) => {
+  try {
+    return await messageService.getFromMatch(match);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -25,6 +33,7 @@ const sendMessage = async (message) => {
 }
 
 module.exports = {
-  getAll: getAllMessages,
+  getFromUser: getMessagesFromUser,
+  getFromMatch: getMessagesFromMatch,
   send: sendMessage
 }

@@ -11,7 +11,7 @@ import { mapGetters } from 'vuex';
 
 export default {
     props: {
-        message: String
+        message: Object
     },
     computed: {
         ...mapGetters({
