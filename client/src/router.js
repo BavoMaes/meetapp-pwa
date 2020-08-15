@@ -27,7 +27,7 @@ let router = new Router({
     {
       path: '/profile',
       name: 'My profile',
-      component: () => import('./views/Profile.vue')
+      component: () => import('./views/profile/Profile.vue')
     },
     {
       path: '/info',
@@ -48,10 +48,10 @@ let router = new Router({
     {
       path: '/discover',
       name: 'Discover',
-      component: () => import('./views/Discover.vue'),
       meta: {
         requiresAuth: true
       }
+      component: () => import('./views/discover/Discover.vue'),
     },
     {
       path: '/chat',

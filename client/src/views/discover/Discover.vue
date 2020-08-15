@@ -1,15 +1,23 @@
 <template>
   <div class="discover">
-    <h1>This is the discover page</h1>
+    <Card/>
   </div>
 </template>
+
+<script>
+import Card from '@/components/discover/Card'
+export default {
+  components: {
+    Card
+  }
+}
+</script>
 
 <style lang="scss">
 .discover {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-content: center;
+    align-items: center;
     height: calc(100vh - 125px);
 }
 
