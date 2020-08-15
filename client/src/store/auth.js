@@ -27,9 +27,7 @@ const authModule = {
       state.user = user
     }
   },
-  actions: {
-
-  }
+  actions: {}
 }
 
 export default authModule;

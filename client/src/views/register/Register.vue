@@ -29,14 +29,14 @@ export default {
   }),
   methods: {
     register() {
-      this.$socket.emit('register', this.user, this.checkIfCreated);
+      this.$socket.emit('register', this.user, this.authenticateClient);
     },
-    checkIfCreated(user) {
-      if (user.hasOwnProperty('error')) {
-        this.error = user.error;
+    authenticateClient(response) {
+      if (response.hasOwnProperty('error')) {
+        this.error = response.error;
       } else {
-        this.error = null;
-        this.$router.push({path: '/info'});
+        this.$store.commit('auth/setToken', response.token);
+        this.$socket.emit('authentication', response.token);
       }
     }
   }

@@ -12,7 +12,7 @@ const sendMessage = async (message) => {
 
 const getMessagesFromUser = async (user) => {
   try {
-    let matches = await matchService.getAll(user);
+    let matches = await matchService.getFromUser(user);
     let matchIds = matches.map(match => match._id);
     let messages = await messageModel.model.find({matchId: {$in: matchIds}}).populate();
     return messages;

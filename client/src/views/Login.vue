@@ -12,13 +12,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 export default {
-    computed: {
-        ...mapGetters({
-            user: 'auth/getUser'
-        })
-    },
     data: () => ({
         email: null,
         password: null,
@@ -26,37 +20,16 @@ export default {
     }),
     methods: {
         login() {
-            this.$socket.emit('login', {email: this.email, password: this.password}, this.handleLoginResponse);
+            this.$socket.emit('login', {email: this.email, password: this.password}, this.authenticateClient);
         },
-        handleLoginResponse(response) {
+        authenticateClient(response) {
             if (response.hasOwnProperty('error')) {
                 this.error = response.error
             } else {
-                this.initUser(response.token, response.user);
-                this.$socket.emit('getMatches', response.user, this.handleMatchesResponse);
+                this.$store.commit('auth/setToken', response.token);
+                this.$socket.emit('authentication', response.token);
             }
         },
-        initUser(token, user) {
-            this.$store.commit('auth/setAuthenticated', true);
-            this.$store.commit('auth/setToken', token);
-            this.$store.commit('auth/setUser', user);
-        },
-        handleMatchesResponse(response) {
-            if (response.hasOwnProperty('error')) {
-                this.error = response.error
-            } else {
-                this.$store.commit('matches/initMatches', response);
-                this.$socket.emit('getMessages', this.user, this.handleMessagesResponse);
-            }
-        },
-        handleMessagesResponse(response) {
-            if (response.hasOwnProperty('error')) {
-                this.error = response.error
-            } else {
-                this.$store.commit('chat/initMessages', response);
-                this.$router.push({path: '/chat'});
-            }
-        }
     }
 }
 </script>

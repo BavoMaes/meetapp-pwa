@@ -34,10 +34,18 @@ const userSchema = mongoose.Schema({
 
 const userModel = mongoose.model('User', userSchema);
 
-const createUser = (document) => { return queries.create(userModel, document) };
-const findUserById = (document) => { return queries.findById(userModel, document) };
-const updateUser = (document) => { return queries.update(userModel, document) };
-const deleteUser = (document) => { return queries.delete(userModel, document) };
+const createUser = async (document) => {
+    return await queries.create(userModel, document)
+};
+const findUserById = async (document) => {
+    return await queries.findById(userModel, document)
+};
+const updateUser = async (document) => {
+    return await queries.update(userModel, document)
+};
+const deleteUser = async (document) => {
+    return await queries.delete(userModel, document)
+};
 
 module.exports = {
     model: userModel,

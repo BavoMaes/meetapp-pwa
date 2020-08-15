@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 // https://github.com/auth0/node-jsonwebtoken
 // Laatst geraadpleegd op 3 juni 2020
 
-this.sign = async (id) => {
+const sign = async (id) => {
   try {
     return jwt.sign({
         userId: id
@@ -19,9 +19,9 @@ this.sign = async (id) => {
 // https://github.com/auth0/node-jsonwebtoken
 // Laatst geraadpleegd op 3 juni 2020
 
-this.verifyToken = async (token) => {
+const verifyToken = async (token) => {
   try {
-    let decodedToken = jwt.verity(token, process.env.JWT_KEY);
+    let decodedToken = jwt.verify(token, process.env.JWT_KEY);
     return decodedToken.userId
   } catch (error) {
     throw error;
@@ -29,5 +29,6 @@ this.verifyToken = async (token) => {
 }
 
 module.exports = {
-  sign: this.sign
+  sign: sign,
+  verify: verifyToken
 }

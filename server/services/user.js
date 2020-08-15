@@ -10,8 +10,12 @@ const registerUser = async (user) => {
     }
     user.password = await hashPassword(user.password);
     let createdUser = await createNewUser(user);
-    let validatedUser = await validateUser(createdUser);
-    return validatedUser;
+    if (!createdUser) {
+      throw new Error('User could not be created.');
+    }
+    return {
+      token: await authService.sign(String(createdUser._id))
+    }
   } catch (error) {
     throw error;
   }
@@ -27,8 +31,7 @@ const loginUser = async (user) => {
       throw new Error('Invalid user credentials');
     }
     return {
-      token: await authService.sign(user),
-      user: stripSensitiveData(existingUser)
+      token: await authService.sign(existingUser._id),
     }
   } catch (error) {
     throw error;
@@ -64,17 +67,6 @@ const compareHashes = async (password, hashedPassword) => {
 const createNewUser = async (user) => {
   try {
     return await userModel.create(user);
-  } catch (error) {
-    throw error;
-  }
-}
-
-const validateUser = async (user) => {
-  try {
-    if (!user) {
-      throw new Error();
-    }
-    return user;
   } catch (error) {
     throw error;
   }

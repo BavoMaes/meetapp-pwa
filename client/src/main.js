@@ -8,18 +8,20 @@ import './assets/css/reset.css';
 
 Vue.config.productionTip = false;
 
+let socketio = new VueSocketIO({
+  debug: true,
+  connection: 'http://localhost:5000',
+  vuex: {
+    store,
+    actionPrefix: 'SOCKET_',
+    mutationPrefix: 'SOCKET_'
+  }
+});
+
 // vue-socket.io
 // https://www.npmjs.com/package/vue-socket.io
 // Laatst geraadpleegd op 2 juni 2020
-Vue.use(new VueSocketIO({
-  debug: true,
-  connection: 'http://localhost:5000',
-    vuex: {
-      store,
-      actionPrefix: 'SOCKET_',
-      mutationPrefix: 'SOCKET_'
-    }
-}));
+Vue.use(socketio);
 
 new Vue({
   router,
