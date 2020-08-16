@@ -28,7 +28,7 @@ export default {
 <style lang="scss">
 .card {
     width: calc(100% - 50px);
-    height: calc(100% - 150px);
+    height: calc(100% - 160px);
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 10px;
     display: flex;
