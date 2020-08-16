@@ -48,10 +48,10 @@ let router = new Router({
     {
       path: '/discover',
       name: 'Discover',
+      component: () => import('./views/discover/Discover.vue'),
       meta: {
         requiresAuth: true
       }
-      component: () => import('./views/discover/Discover.vue'),
     },
     {
       path: '/chat',
