@@ -32,6 +32,7 @@ export default {
       if (response.hasOwnProperty('error')) {
         this.error = response.error;
       } else {
+        this.$store.commit('chat/addMessage', response.message);
         this.message = "";
       }
     }

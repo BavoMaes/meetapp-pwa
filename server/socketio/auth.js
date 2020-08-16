@@ -3,6 +3,7 @@ const userService = require('../services/user');
 const matchService = require('../services/match');
 const messageService = require('../services/message');
 const userModel = require('../models/user');
+const rooms = require('./rooms');
 
 const authenticate = async (socket, token, callback) => {
   try {
@@ -11,10 +12,13 @@ const authenticate = async (socket, token, callback) => {
     if (!existingUser) {
       return callback(new Error('Could not authenticate user...'));
     };
+    let matches = await matchService.getFromUser(existingUser);
+    await rooms.joinChatRooms(socket, matches);
     return callback(null, {
       user: await userService.strip(existingUser),
-      matches: await matchService.getFromUser(existingUser),
-      messages: await messageService.getFromUser(existingUser)
+      matches: matches,
+      messages: await messageService.getFromUser(existingUser),
+      users: await userService.getAvailable(existingUser, matches)
     });
   } catch (error) {
     console.error(error);
