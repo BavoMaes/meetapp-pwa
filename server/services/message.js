@@ -29,8 +29,26 @@ const createMessage = async (message) => {
   }
 } 
 
+const updateMessage = async (message) => {
+  try {
+    return await messageModel.update(message);
+  } catch (error) {
+    throw error;
+  }
+}
+
+const deleteMessage = async (message) => {
+  try {
+    return await messageModel.delete(message);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   getFromUser: getMessagesFromUser,
   getFromMatch: getMessagesFromMatch,
-  create: createMessage
+  create: createMessage,
+  update: updateMessage,
+  delete: deleteMessage
 }

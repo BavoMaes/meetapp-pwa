@@ -33,7 +33,25 @@ const cleanMatches = async (matches, currentUser) => {
   return cleanedMatches;
 }
 
+const updateMatch = async (match) => {
+  try {
+    return await matchModel.update(match);
+  } catch (error) {
+    throw error;
+  }
+}
+
+const deleteMatch = async (match) => {
+  try {
+    return await matchModel.delete(match);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   create: createMatch,
-  getFromUser: getMatchesFromUser
+  getFromUser: getMatchesFromUser,
+  update: updateMatch,
+  delete: deleteMatch
 }

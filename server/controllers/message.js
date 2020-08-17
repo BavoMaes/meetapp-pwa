@@ -5,10 +5,7 @@ const getMessagesFromUser = async (user) => {
     let messages = await messageService.getFromUser(user);
     return messages;
   } catch (error) {
-    console.error(error.message);
-    return {
-      error: 'Something went wrong. Please try again later.'
-    }
+    throw error;
   }
 }
 
@@ -25,15 +22,30 @@ const sendMessage = async (message) => {
     let sentMessage = await messageService.create(message);
     return sentMessage;
   } catch (error) {
-    console.error(error.message);
-    return {
-      error: 'Something went wrong. Please try again later.'
-    }
+    throw error;
+  }
+}
+
+const updateMessage = async (message) => {
+  try {
+    return await messageService.update(message);
+  } catch (error) {
+    throw error;
+  }
+}
+
+const deleteMessage = async (message) => {
+  try {
+    return await messageService.delete(message);
+  } catch (error) {
+    throw error;
   }
 }
 
 module.exports = {
   getFromUser: getMessagesFromUser,
   getFromMatch: getMessagesFromMatch,
-  send: sendMessage
+  send: sendMessage,
+  update: updateMessage,
+  delete: deleteMessage
 }

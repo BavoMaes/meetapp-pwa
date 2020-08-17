@@ -6,7 +6,7 @@ const authService = require('./auth');
 const registerUser = async (user) => {
   try {
     if (await checkIfUserExists(user)) {
-      throw Error('User already exists.');
+      throw new Error('User already exists.');
     }
     user.password = await hashPassword(user.password);
     let createdUser = await createNewUser(user);
