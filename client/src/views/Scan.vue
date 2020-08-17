@@ -7,12 +7,16 @@
 
 <script>
 import ScanButton from '@/components/scan/ScanButton';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
     ScanButton
   },
   computed: {
+    ...mapGetters({
+      user: 'auth/getUser'
+    }),
     getWidthAndHeight() {
       return `width: ${this.width}px; height: ${this.height}px`
     }
@@ -56,7 +60,29 @@ export default {
       return canvas.toDataURL('image/png');
     },
     handleFaceDetection(response) {
-      console.log('Face detected?', response);
+      if (response) {
+        this.$socket.emit('addMatch', {users: [this.user, {_id: response}]}, this.handleMatchRepsonse)
+      }
+    },
+    handleMatchRepsonse(response) {
+      if (response.hasOwnProperty('error')) {
+        console.error = response
+      } else {
+        console.log(response);
+        let matchedUser = response;
+        this.$store.commit('matches/addMatch', {_id: response._id, user: this.checkUserIds(response.users)});
+        this.$store.commit('users/removeUser', matchedUser);
+        this.$router.push('/chat/' + String(response._id));
+      }
+    },
+    checkUserIds(users) {
+      let otherUser;
+      users.map(matchUser => {
+        if (matchUser._id != this.user._id) {
+          otherUser = matchUser;
+        }
+      });
+      return otherUser;
     }
   },
   mounted() {

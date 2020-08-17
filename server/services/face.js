@@ -1,10 +1,14 @@
 const faceapi = require('face-api.js');
+const canvas = require('canvas');
 
-const detectFace = async (input) => {
+let faceMatcher;
+
+const recognizeFace = async (input) => {
   try {
-    let detectedFace = await faceapi.detectSingleFace(input);
-    if (detectedFace && detectedFace.hasOwnProperty('_score') && detectedFace._score > 0.5) {
-      return true
+    let detectedFace = await faceapi.detectSingleFace(input).withFaceLandmarks().withFaceDescriptor();
+    if (detectedFace) {
+      let match = await faceMatcher.findBestMatch(detectedFace.descriptor);
+      return match._label;
     }
     return false;
   } catch (error) {
@@ -12,16 +16,22 @@ const detectFace = async (input) => {
   }
 }
 
-const recognizeFace = async () => {
+const trainModel = async () => {
   try {
-      
+    let descriptions = [];
+    for (let i = 1; i < 2; i++) {
+      let img = await canvas.loadImage(`./server/faceapi/faces/${i}.jpg`);
+      let detectedFace = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
+      descriptions.push(detectedFace.descriptor);
+    }
+    let trainedModel = new faceapi.LabeledFaceDescriptors('5f383cc37705751e41b5edba', descriptions);
+    faceMatcher = new faceapi.FaceMatcher(trainedModel);
   } catch (error) {
-    console.error(error.message);
-    console.error('Something went wrong when loading the models');
+    throw error;
   }
 }
 
 module.exports = {
-  detect: detectFace,
-  recognize: recognizeFace
+  recognize: recognizeFace,
+  trainModel: trainModel
 }

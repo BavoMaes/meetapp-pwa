@@ -4,7 +4,7 @@ const faceService = require('../services/face');
 const recognizeFace = async (input, width, height) => {
   try {
     let image = imageService.toImageElement(input, width, height);
-    return faceService.detect(image);
+    return await faceService.recognize(image);
   } catch (error) {
     throw error;
   }

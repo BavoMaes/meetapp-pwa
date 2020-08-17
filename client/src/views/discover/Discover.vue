@@ -28,17 +28,15 @@ export default {
       this.$store.commit('users/removeUser', this.users[0]);
     },
     swipeRight() {
-      console.log('Swiped right!');
       this.$socket.emit('addMatch', {users: [this.user, this.users[0]]}, this.handleMatchRepsonse)
     },
     handleMatchRepsonse(response) {
       if (response.hasOwnProperty('error')) {
         console.error = response
       } else {
-        console.log(response);
         let matchedUser = this.users[0]
-        this.$store.commit('users/removeUser', matchedUser);
         this.$store.commit('matches/addMatch', {_id: response._id, user: this.checkUserIds(response.users)});
+        this.$store.commit('users/removeUser', matchedUser);
         this.$router.push('/chat/' + String(response._id));
       }
     },
