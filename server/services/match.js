@@ -3,7 +3,9 @@ const match = require('../models/match');
 
 const createMatch = async (match) => {
   try {
-    return await matchModel.create(match);
+    let newMatch = await matchModel.model.create(match);
+    let fullMatch = await matchModel.model.findById(newMatch._id).populate({path: 'users', select: '_id firstname lastname jobTitle employer'});
+    return fullMatch;
   } catch (error) {
     throw error;
   }

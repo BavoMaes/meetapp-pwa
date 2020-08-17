@@ -25,7 +25,11 @@ const messageSchema = mongoose.Schema(
 const messageModel = mongoose.model('Message', messageSchema);
 
 const createMessage = async (document) => {
-  return await queries.create(messageModel, document)
+  try {
+    return await queries.create(messageModel, document)
+  } catch (error) {
+    throw error;
+  }
 };
 const findMessageById = async (document) => {
   return await queries.findById(messageModel, document)

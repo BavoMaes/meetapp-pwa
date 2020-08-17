@@ -12,8 +12,15 @@ const disconnect = require('./socketio/disconnect');
 const port = process.env.PORT || 5000;
 
 /* Initialize database */
-
-database.init();
+(async () => {
+  try {
+    await database.init();
+    console.log('Connected to database');
+  } catch (error) {
+    console.error(error.message);
+    process.exit();
+  }
+})();
 
 /* Initialize face recognition */
 

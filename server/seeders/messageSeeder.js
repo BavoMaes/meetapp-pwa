@@ -10,7 +10,7 @@ const runMessageSeeder = async (users) => {
             userId: user._id,
             content: message.content
           }
-          return await messageService.send(newMessage);
+          return await messageService.create(newMessage);
         })
       })
     )

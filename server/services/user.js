@@ -38,6 +38,19 @@ const loginUser = async (user) => {
   }
 }
 
+const getAvailableUsers = async (user, matches) => {
+  try {
+    let availableUsers = await userModel.model.find({
+      email: {$ne: user.email}
+    }).select('_id firstname lastname jobTitle employer');
+    return availableUsers.filter(user => {
+      return matches.some((match) => {return String(match.user._id) != String(user._id)})
+    })
+  } catch (error) {
+    throw error;
+  }
+}
+
 const checkIfUserExists = async (user) => {
   try {
     return await userModel.model.findOne({
@@ -86,5 +99,6 @@ const stripSensitiveData = (user) => {
 module.exports = {
   register: registerUser,
   login: loginUser,
+  getAvailable: getAvailableUsers,
   strip: stripSensitiveData
 }

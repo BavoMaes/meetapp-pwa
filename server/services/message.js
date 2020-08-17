@@ -1,15 +1,6 @@
 const messageModel = require('../models/message');
 const matchService = require('./match');
 
-const sendMessage = async (message) => {
-  try {
-    let sentMessage = await messageModel.create(message);
-    return sentMessage;
-  } catch (error) {
-    throw error;
-  }
-}
-
 const getMessagesFromUser = async (user) => {
   try {
     let matches = await matchService.getFromUser(user);
@@ -39,7 +30,6 @@ const createMessage = async (message) => {
 } 
 
 module.exports = {
-  send: sendMessage,
   getFromUser: getMessagesFromUser,
   getFromMatch: getMessagesFromMatch,
   create: createMessage

@@ -2,7 +2,7 @@ const matchService = require('../services/match');
 
 const createMatch = async (match) => {
   try {
-    return await matchService.createMatch(match);
+    return await matchService.create(match);
   } catch (error) {
     throw error;
   }

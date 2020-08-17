@@ -5,6 +5,7 @@ import router from '../router';
 import ChatModule from './chat';
 import AuthModule from './auth';
 import MatchesModule from './matches';
+import UsersModule from './users';
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
         commit('auth/setUser', data.user);
         commit('matches/initMatches', data.matches);
         commit('chat/initMessages', data.messages);
+        commit('users/initUsers', data.users);
         commit('auth/setAuthenticated', true);
         router.push('/info');
       },
@@ -30,6 +32,7 @@ export default new Vuex.Store({
   modules: {
     chat: ChatModule,
     auth: AuthModule,
-    matches: MatchesModule
+    matches: MatchesModule,
+    users: UsersModule
   }
 });
